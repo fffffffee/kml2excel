@@ -35,7 +35,7 @@ public class Dom1st {
                 NodeList childNodes = student.getChildNodes();
                 for (int k = 0; k < childNodes.getLength() ; k++) {
                     if (childNodes.item(k).getNodeType() == Node.ELEMENT_NODE) {
-                        System.out.print("第" + (k + 1) + "节点的节点名称：" + childNodes.item(k).getNodeName());
+                        System.out.print("第" + k + "节点的节点名称：" + childNodes.item(k).getNodeName());
                         System.out.println("节点值：" + childNodes.item(k).getTextContent());
                     }
                 }
