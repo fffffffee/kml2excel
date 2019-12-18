@@ -20,7 +20,7 @@ public class Dom4j {
         SAXReader reader = new SAXReader();
         try {
             //2.通过reader对象的read（）方法加载books.xml文件，获取document对象
-            Document document = reader.read(new File("books.xml"));
+            Document document = reader.read(new File("沪昆II期 2019.5.1.kml"));
             //3.通过document对象获取根节点bookstore
             Element bookStore = document.getRootElement();
             //4.通过element对象的elementIterator获取迭代器
