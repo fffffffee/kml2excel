@@ -3,6 +3,7 @@ package Dom4JforGooglEearth_Kml;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
 import java.net.MalformedURLException;
@@ -20,16 +21,12 @@ public class Dom4JforKml {
             Document document = parse(url);
             //3.通过document对象获取根节点
             Element root = document.getRootElement();
-            //System.out.println(root.getName());
+            System.out.println(root.getName());
 
-            List<Element> nodeList = root.elements();
-            for (Element e:nodeList) {
+            List<Node> nodeList = document.selectNodes("Document/Folder");
 
-                List<Element> nodeList2 = e.elements();
-                for(Element e2:nodeList2) {
-                    System.out.println(e2.getName());
-                }
-                System.out.println(e.getName());
+            for (Node node : nodeList) {
+                System.out.println(node.getName());
             }
 
             } catch (DocumentException e1) {
@@ -50,6 +47,15 @@ public class Dom4JforKml {
         // iterate through child elements of root
         for (Iterator<Element> it = root.elementIterator(); it.hasNext();) {
             Element element = it.next();
+        }
+        List<Element> nodeList = root.elements();
+        for (Element e:nodeList) {
+
+            List<Element> nodeList2 = e.elements();
+            for(Element e2:nodeList2) {
+                System.out.println(e2.getName());
+            }
+            System.out.println(e.getName());
         }
     }
 }
