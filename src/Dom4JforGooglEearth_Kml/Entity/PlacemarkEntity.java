@@ -20,5 +20,5 @@ public class PlacemarkEntity {
         return coordinates_Placemark;
     }
 
-    
+
 }
