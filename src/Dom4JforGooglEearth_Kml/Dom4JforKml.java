@@ -15,69 +15,28 @@ public class Dom4JforKml {
     public static void main(String[] args) throws MalformedURLException {
         URL url = new URL("file:D:/programming/IDEA_Dev/readkml4method/沪昆线12.11.kml");
         try {
-            SAXReader reader = new SAXReader(new DocumentFactory());
-            //reader.getDocumentFactory().setXPathNamespaceURIs(map);
-            Document document = reader.read(url);
-            Element root = document.getRootElement();
-            Map namespace = new HashMap();
-            String nsURI = root.getNamespaceURI();
-            namespace.put("xmlns" , nsURI);
-            //namespace.put("gx" , "http://www.google.com/kml/ext/2.2");
-            namespace.put("kml" , "http://www.opengis.net/kml/2.2");
-            //namespace.put("atom" , "http://www.w3.org/2005/Atom");
-
-            //遍历kml节点
-            /*Iterator it = root.elementIterator();
-            while (it.hasNext()) {
-                Element element = (Element) it.next();//读取第二层Document节点
-                System.out.println(element.getName());
-                Iterator it2 =  element.elementIterator();
-                while (it2.hasNext()) {
-                    Element element2 = (Element) it2.next();//读取第三层Folder节点
-                    if(element2.getName().equals("Folder")) {
-                        System.out.println("key:" + element2.getName());
-                        //System.out.println("val:" + element2.getStringValue());
-                    }
-                    Iterator it3 = element2.elementIterator();
-                    while (it3.hasNext()) {
-                        Element element3 = (Element) it3.next();//读取第四层Folder
-                        if (element3.getName().equals("Folder")) {
-                            System.out.println("key:" + element3.getName());
-                            //System.out.println("val:" + element3.getStringValue());
-                        }
-                    }
-                }
-            }*/
-
-            XPath xPath_Folder = document.createXPath("/xmlns:kml/xmlns:Document/xmlns:Folder//xmlns:name");
-            xPath_Folder.setNamespaceURIs(namespace);
+            Document document = parse(url);
+            XPath xPath_Folder = document.createXPath("/xmlns:kml/xmlns:Document/xmlns:Folder/xmlns:Folder/xmlns:name[text() = '区间节点']/../xmlns:Folder/xmlns:Placemark//xmlns:name");
+            xPath_Folder.setNamespaceURIs(createNamespace());
             List<Node> nodeList = xPath_Folder.selectNodes(document);
-
+            System.out.println("共找到" + nodeList.size() + "个节点。");
             for (Node node : nodeList) {
-                //System.out.println(node.getName());
-                /*XPath xPath_Folder_2ed = document.createXPath("./xmlns:name");
-                xPath_Folder_2ed.setNamespaceURIs(namespace);
-                List<Node> nodeList_2ed = xPath_Folder_2ed.selectNodes(document);
-                for (Node node2 :
-                        nodeList_2ed) {
-                    System.out.println(node2.getName());
-                }*/
+                System.out.println(node.getName());
+                System.out.println(node.getStringValue());
 
                 if (node.getStringValue().equals("区间节点")) {
                     //todo
                     XPath xPath_Folder_2ed = node.createXPath("..");
-                    xPath_Folder_2ed.setNamespaceURIs(namespace);
+                    xPath_Folder_2ed.setNamespaceURIs(createNamespace());
                     Node folder_2ed = xPath_Folder_2ed.selectSingleNode(node);
-                    System.out.println(folder_2ed.getName());
+                    //System.out.println(folder_2ed.getName());
                     XPath xPath_placemark = folder_2ed.createXPath("./xmlns:Folder/xmlns:Placemark//xmlns:name|./xmlns:Folder/xmlns:Placemark//xmlns:coordinates");
                     //LabEntity lab=new LabEntity();
-                    //Object coordinates_lab=lab.setName_lab
-                    //Object placemark_name_lab=
-                    xPath_placemark.setNamespaceURIs(namespace);
+                    xPath_placemark.setNamespaceURIs(createNamespace());
                     List<Node> placemarkList = xPath_placemark.selectNodes(folder_2ed);
                     for (Node placemark : placemarkList) {
                         //System.out.println(placemark.getName());
-                        System.out.println(placemark.getStringValue()+"----rs");
+                        //System.out.println(placemark.getStringValue()+"----rs");
                     }
                 }
             }
@@ -86,13 +45,33 @@ public class Dom4JforKml {
         }
     }
 
-    //1.创建SAXReader的对象reader
+    /**
+     * 创建SAXReader的对象reader
+     * @param url xml文件路径
+     * @return
+     * @throws DocumentException
+     */
     public static Document parse(URL url) throws DocumentException {
-        SAXReader reader = new SAXReader();
+        SAXReader reader = new SAXReader(new DocumentFactory());
         Document document = reader.read(url);
-        //todo
-        // 按if返回null 并附带信息至console  还要写xmlhelper
-        return document;
+        if ( document == null) {
+            return null;
+        } else {
+            return document;
+        }
+    }
+
+    /**
+     * 创建命名空间
+     * @return 返回命名空间变量
+     */
+    public static Map createNamespace() {
+        //Todo
+        Map namespace = new HashMap();
+        //String nsURI = root.getNamespaceURI();
+        namespace.put("xmlns" , "http://www.opengis.net/kml/2.2");
+        namespace.put("kml" , "http://www.opengis.net/kml/2.2");
+        return namespace;
     }
     // 遍历xml节点
     public void selectnode(Document document) throws DocumentException {
