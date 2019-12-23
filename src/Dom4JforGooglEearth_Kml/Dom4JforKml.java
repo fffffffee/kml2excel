@@ -1,5 +1,6 @@
 package Dom4JforGooglEearth_Kml;
 
+import Dom4JforGooglEearth_Kml.Entity.PlacemarkEntity;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
@@ -16,30 +17,27 @@ public class Dom4JforKml {
         URL url = new URL("file:D:/programming/IDEA_Dev/readkml4method/沪昆线12.11.kml");
         try {
             Document document = parse(url);
-            XPath xPath_Folder = document.createXPath("/xmlns:kml/xmlns:Document/xmlns:Folder/xmlns:Folder/xmlns:name[text() = '区间节点']/../xmlns:Folder/xmlns:Placemark//xmlns:name");
+            XPath xPath_Folder = document.createXPath("/xmlns:kml/xmlns:Document/xmlns:Folder/xmlns:Folder/xmlns:name[text() = '区间节点']/../xmlns:Folder//xmlns:Placemark");  //读取placemark
             xPath_Folder.setNamespaceURIs(createNamespace());
-            List<Node> nodeList = xPath_Folder.selectNodes(document);
-            System.out.println("共找到" + nodeList.size() + "个节点。");
-            for (Node node : nodeList) {
-                System.out.println(node.getName());
-                System.out.println(node.getStringValue());
 
-                if (node.getStringValue().equals("区间节点")) {
-                    //todo
-                    XPath xPath_Folder_2ed = node.createXPath("..");
-                    xPath_Folder_2ed.setNamespaceURIs(createNamespace());
-                    Node folder_2ed = xPath_Folder_2ed.selectSingleNode(node);
-                    //System.out.println(folder_2ed.getName());
-                    XPath xPath_placemark = folder_2ed.createXPath("./xmlns:Folder/xmlns:Placemark//xmlns:name|./xmlns:Folder/xmlns:Placemark//xmlns:coordinates");
-                    //LabEntity lab=new LabEntity();
-                    xPath_placemark.setNamespaceURIs(createNamespace());
-                    List<Node> placemarkList = xPath_placemark.selectNodes(folder_2ed);
-                    for (Node placemark : placemarkList) {
-                        //System.out.println(placemark.getName());
-                        //System.out.println(placemark.getStringValue()+"----rs");
+            List<Node> placemarkList = xPath_Folder.selectNodes(document);
+            System.out.println("共找到" + placemarkList.size() + "个节点。");
+
+            PlacemarkEntity placemarkEntity = new PlacemarkEntity();
+
+            for (Node placemark : placemarkList) {
+                XPath xPath_Name_Coordinates = placemark.createXPath("./xmlns:name|.//xmlns:coordinates");
+                xPath_Name_Coordinates.setNamespaceURIs(createNamespace());
+                List<Node> attsofNode = xPath_Name_Coordinates.selectNodes(placemark);
+                /*for (Node n :
+                     attsofNode) {
+                    System.out.println(n.getStringValue());
+                }*/
+                placemarkEntity.setName_Placemark(attsofNode.get(0).getStringValue());
+                placemarkEntity.setCoordinates_Placemark(attsofNode.get(1).getStringValue());
+                System.out.println(placemarkEntity.getName_Placemark());
+                System.out.println(placemarkEntity.getCoordinates_Placemark());
                     }
-                }
-            }
             } catch (DocumentException e1) {
             e1.printStackTrace();
         }
