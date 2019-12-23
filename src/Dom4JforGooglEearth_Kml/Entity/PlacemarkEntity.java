@@ -19,4 +19,6 @@ public class PlacemarkEntity {
     public String getCoordinates_Placemark() {
         return coordinates_Placemark;
     }
+
+    
 }

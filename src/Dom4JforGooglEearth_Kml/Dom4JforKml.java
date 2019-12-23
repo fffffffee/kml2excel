@@ -37,6 +37,8 @@ public class Dom4JforKml {
                 placemarkEntity.setCoordinates_Placemark(attsofNode.get(1).getStringValue());
                 System.out.println(placemarkEntity.getName_Placemark());
                 System.out.println(placemarkEntity.getCoordinates_Placemark());
+
+
                     }
             } catch (DocumentException e1) {
             e1.printStackTrace();
