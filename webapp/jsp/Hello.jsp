@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Dom4JforGooglEearth_Kml.Entity.PlacemarkEntity" %>
 
-<%@ page  taglib prefix ="c" uri = "http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix ="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 
 <html>
 <head>
@@ -16,15 +16,22 @@
 </head>
 <body>
     <h1>Hello!</h1>
-    <h2>${String}</h2>
+    <h2>${hello}</h2>
+
     <form method="post" action="">
         <table>
             <tr>
                 <td>里程</td>
                 <td>经纬度</td>
             </tr>
-            <%while (placemarkList.hasnext())
+            <c:forEach items="${placemarkList}" var="placemark">
+                <tr>
+                    <td>${placemark.getName_Placemark()}</td>
+                    <td>${placemark.getCoordinates_Placemark()}</td>
+                </tr>
+            </c:forEach>
         </table>
     </form>
+
 </body>
 </html>

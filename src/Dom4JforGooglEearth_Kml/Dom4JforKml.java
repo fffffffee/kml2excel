@@ -21,19 +21,25 @@ public class Dom4JforKml {
             List<Node> placemarkList = xPath_Folder.selectNodes(document);
             System.out.println("共找到" + placemarkList.size() + "个节点。");
 
-            PlacemarkEntity placemarkEntity = new PlacemarkEntity();
+            //PlacemarkEntity placemarkEntity = new PlacemarkEntity();
 
             for (Node placemark : placemarkList) {
                 XPath xPath_Name_Coordinates = placemark.createXPath("./xmlns:name|.//xmlns:coordinates");
                 xPath_Name_Coordinates.setNamespaceURIs(createNamespace());
                 List<Node> attsofNode = xPath_Name_Coordinates.selectNodes(placemark);
+                PlacemarkEntity placemarkEntity = new PlacemarkEntity();
                 placemarkEntity.setName_Placemark(attsofNode.get(0).getStringValue());
                 placemarkEntity.setCoordinates_Placemark(attsofNode.get(1).getStringValue());
+                //ArrayList<PlacemarkEntity> t_placemarkEntity = new ArrayList<PlacemarkEntity>(placemarkEntity);
                 placemarkEntitiesList.add(placemarkEntity);
-                System.out.println(placemarkEntity.getName_Placemark());
-                System.out.println(placemarkEntity.getCoordinates_Placemark());
+                //System.out.println(placemarkEntity.getName_Placemark());
+                //System.out.println(placemarkEntity.getCoordinates_Placemark());
             }
-
+            for (PlacemarkEntity placemark:
+                 placemarkEntitiesList) {
+                System.out.println(placemark.getName_Placemark() + placemark.getCoordinates_Placemark());
+            }
+            System.out.println("刚打印的" + "共" + placemarkEntitiesList.size() + "个节点");
 
         } catch (DocumentException e1) {
             e1.printStackTrace();
