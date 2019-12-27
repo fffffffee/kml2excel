@@ -24,16 +24,18 @@ public class Dom4JforKml {
             //PlacemarkEntity placemarkEntity = new PlacemarkEntity();
 
             for (Node placemark : placemarkList) {
+
                 XPath xPath_Name_Coordinates = placemark.createXPath("./xmlns:name|.//xmlns:coordinates");
                 xPath_Name_Coordinates.setNamespaceURIs(createNamespace());
                 List<Node> attsofNode = xPath_Name_Coordinates.selectNodes(placemark);
-                PlacemarkEntity placemarkEntity = new PlacemarkEntity();
-                placemarkEntity.setName_Placemark(attsofNode.get(0).getStringValue());
-                placemarkEntity.setCoordinates_Placemark(attsofNode.get(1).getStringValue());
-                //ArrayList<PlacemarkEntity> t_placemarkEntity = new ArrayList<PlacemarkEntity>(placemarkEntity);
-                placemarkEntitiesList.add(placemarkEntity);
-                //System.out.println(placemarkEntity.getName_Placemark());
-                //System.out.println(placemarkEntity.getCoordinates_Placemark());
+                if (attsofNode.get(0).getStringValue().equals("未命名路径")) {
+
+                } else {
+                    PlacemarkEntity placemarkEntity = new PlacemarkEntity();
+                    placemarkEntity.setName_Placemark(attsofNode.get(0).getStringValue());
+                    placemarkEntity.setCoordinates_Placemark(attsofNode.get(1).getStringValue());
+                    placemarkEntitiesList.add(placemarkEntity);
+                }
             }
             for (PlacemarkEntity placemark:
                  placemarkEntitiesList) {
