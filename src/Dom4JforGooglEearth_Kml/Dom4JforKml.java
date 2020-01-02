@@ -11,7 +11,7 @@ import java.util.*;
 public class Dom4JforKml {
 
     public static ArrayList<PlacemarkEntity> readkml() throws MalformedURLException {
-        URL url = new URL("file:D:/programming/IDEA_Dev/readkml4method/沪昆线12.11.kml");
+        URL url = new URL("file:E:/readkml4methed/沪昆线12.11.kml");
         ArrayList<PlacemarkEntity> placemarkEntitiesList = new ArrayList<PlacemarkEntity>();
         try {
             Document document = parse(url);
