@@ -63,7 +63,7 @@ public class UploadServlet extends HttpServlet {
         // 构造临时路径来存储上传的文件
         // 这个路径相对当前应用的目录
         String uploadPath = getServletContext().getRealPath("/") + File.separator + UPLOAD_DIRECTORY;
-
+        System.out.println(uploadPath);
         // 如果目录不存在则创建
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
@@ -96,7 +96,11 @@ public class UploadServlet extends HttpServlet {
             request.setAttribute("message" , "错误信息：" + ex.getMessage());
         }
         // 跳转到 message.jsp
-        getServletContext().getRequestDispatcher("/message.jsp").forward(request , response);
+        getServletContext().getRequestDispatcher("/webapp/jsp/message.jsp").forward(request , response);
 
+    }
+    protected void doGet(HttpServletRequest request , HttpServletResponse response) throws ServletException , IOException {
+        //doPost(request , response);
+        request.getRequestDispatcher("/webapp/jsp/upload.jsp").forward(request , response);
     }
 }
