@@ -6,12 +6,20 @@ import org.dom4j.io.SAXReader;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Dom4JforKml {
 
+    static String FilePath = "file:" + UploadServlet.getUploadFilePath();
+
     public static ArrayList<PlacemarkEntity> readkml() throws MalformedURLException {
-        URL url = new URL("file:E:/readkml4methed/沪昆线12.11.kml");
+
+
+        //URL url = new URL("file:E:/readkml4methed/沪昆线12.11.kml");
+        URL url = new URL(FilePath);
         ArrayList<PlacemarkEntity> placemarkEntitiesList = new ArrayList<PlacemarkEntity>();
         try {
             Document document = parse(url);
