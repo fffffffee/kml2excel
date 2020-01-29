@@ -13,13 +13,12 @@ import java.util.Map;
 
 public class Dom4JforKml {
 
-    static String FilePath = "file:" + UploadServlet.getUploadFilePath();
-
     public static ArrayList<PlacemarkEntity> readkml() throws MalformedURLException {
-
-
+        ArrayList pathlist=UploadServlet.getUploadFilePath();
+        System.out.println("goto:"+pathlist.get(0));
+        String filePath = "file:"+pathlist.get(0);
         //URL url = new URL("file:E:/readkml4methed/沪昆线12.11.kml");
-        URL url = new URL(FilePath);
+        URL url = new URL(filePath);
         ArrayList<PlacemarkEntity> placemarkEntitiesList = new ArrayList<PlacemarkEntity>();
         try {
             Document document = parse(url);

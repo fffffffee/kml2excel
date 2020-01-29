@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,13 +24,14 @@ public class UploadServlet extends HttpServlet {
 
     //上传文件存储目录
     private static final String UPLOAD_DIRECTORY = "upload";
-    static String UploadFilePath;
+    //private static String uploadFilePath;
 
     //上传配置
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;   // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 40;     // 40MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50;  // 50MB
-
+    private static ArrayList flist = new ArrayList();
+    int flag=0;
     /**
      * 上传数据及保存文件
      */
@@ -63,8 +65,9 @@ public class UploadServlet extends HttpServlet {
 
         // 构造临时路径来存储上传的文件
         // 这个路径相对当前应用的目录
-        String uploadPath = getServletContext().getRealPath("/") + File.separator + UPLOAD_DIRECTORY;
+        String uploadPath = getServletContext().getRealPath("/") + UPLOAD_DIRECTORY;
         System.out.println(uploadPath);
+        System.out.println(getServletContext().getRealPath("/"));
 
         // 如果目录不存在则创建
         File uploadDir = new File(uploadPath);
@@ -87,8 +90,19 @@ public class UploadServlet extends HttpServlet {
                         String filePath = uploadPath + File.separator + fileName;
                         File storeFile = new File(filePath);
                         // 控制台输出文件的上传路径
-                        System.out.println(filePath);
-                        UploadFilePath = filePath;
+
+                        //uploadFilePath = filePath;
+                        //flist= new  java.util.ArrayList();
+                        if(flist.isEmpty()) {
+                            System.out.println("1=="+filePath);
+                            flist.add(filePath);
+                        }else{
+                            System.out.println("2=="+filePath);
+                            flist.clear();
+                            flist.add(filePath);
+                        }
+                        System.out.println("333"+flist.size()+flist.get(0));
+                        //getUploadFilePath(filePath);
                         // 保存文件到硬盘
                         item.write(storeFile);
                         request.setAttribute("message" , "文件上传成功！");  //需要修改，做判断，是否上传成功
@@ -102,14 +116,15 @@ public class UploadServlet extends HttpServlet {
         //getServletContext().getRequestDispatcher("/webapp/jsp/message.jsp").forward(request , response);
         // 跳转到kml文件解析页面
         response.sendRedirect("/hello");
-
+        flag++;
     }
     protected void doGet(HttpServletRequest request , HttpServletResponse response) throws ServletException , IOException {
         //doPost(request , response);
         request.getRequestDispatcher("/webapp/jsp/upload.jsp").forward(request , response);
     }
 
-    public static String getUploadFilePath() {
-        return UploadFilePath;
+    public static java.util.ArrayList getUploadFilePath() {
+        //stem.out.println("333"+flist.size()+flist.get(0));
+        return flist;
     }
 }
