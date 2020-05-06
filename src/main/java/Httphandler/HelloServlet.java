@@ -1,6 +1,6 @@
-package Dom4JforGooglEearth_Kml.Httphandler;
+package main.java.Httphandler;
 
-import Dom4JforGooglEearth_Kml.Entity.PlacemarkEntity;
+import main.java.Entity.PlacemarkEntity;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static Dom4JforGooglEearth_Kml.Dom4JforKml.readkml;
+import static Dom4JforKml.readkml;
 
 @WebServlet("/hello")
 public class HelloServlet extends HttpServlet {

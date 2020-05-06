@@ -1,6 +1,6 @@
-package Dom4JforGooglEearth_Kml;
+package main.java
 
-import Dom4JforGooglEearth_Kml.Entity.PlacemarkEntity;
+import main.java.Entity.PlacemarkEntity;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 public class Dom4JforKml {
 
     public static ArrayList<PlacemarkEntity> readkml() throws MalformedURLException {
-        ArrayList pathlist=UploadServlet.getUploadFilePath();
+        ArrayList pathlist= UploadServlet.getUploadFilePath();
         System.out.println("goto:"+pathlist.get(0));
         String filePath = "file:"+pathlist.get(0);
         //URL url = new URL("file:E:/readkml4methed/沪昆线12.11.kml");
