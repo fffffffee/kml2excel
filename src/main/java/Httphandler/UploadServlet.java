@@ -1,4 +1,4 @@
-Package main.java
+package Httphandler;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Servlet implementation class UploadServlet
+ * Servlet implementation class Httphandler.UploadServlet
  */
 @WebServlet("/UploadServlet")
 public class UploadServlet extends HttpServlet {
