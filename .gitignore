@@ -9,3 +9,4 @@ venv/
 /target/
 /.git
 /out
+/classes
